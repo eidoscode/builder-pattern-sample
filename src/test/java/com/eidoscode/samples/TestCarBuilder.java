@@ -1,7 +1,6 @@
 package com.eidoscode.samples;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 
 import org.apache.log4j.Logger;
@@ -10,6 +9,7 @@ import org.junit.Test;
 import com.eidoscode.samples.builder.Car;
 import com.eidoscode.samples.builder.ElectricCar;
 import com.eidoscode.samples.builder.InternalCombustionCar;
+import static org.junit.Assert.assertNotSame;
 
 /**
  * Test the Car builder.
@@ -36,18 +36,18 @@ public class TestCarBuilder {
     logger.info("ok.");
 
     logger.info("Checking If a not white Toyota Avensis returns new object instances.");
-    Car toyotaCorolla1 = new InternalCombustionCar.Builder("Toyota", "Avensis").color("Black").build();
-    Car toyotaCorolla2 = new InternalCombustionCar.Builder("Toyota", "Avensis").color("Black").build();
-    assertNotEquals(toyotaCorolla1, toyotaCorolla2);
-    assertEquals(toyotaAvensis1.getBrand(), toyotaAvensis2.getBrand());
-    assertEquals(toyotaAvensis1.getType(), toyotaAvensis2.getType());
-    assertEquals(toyotaAvensis1.getColor(), toyotaAvensis2.getColor());
+    Car toyotaCorolla1 = new InternalCombustionCar.Builder("Toyota", "Corolla").color("Black").build();
+    Car toyotaCorolla2 = new InternalCombustionCar.Builder("Toyota", "Corolla").color("Black").build();
+    assertNotSame(toyotaCorolla1, toyotaCorolla2);
+    assertEquals(toyotaCorolla1.getBrand(), toyotaCorolla2.getBrand());
+    assertEquals(toyotaCorolla1.getType(), toyotaCorolla2.getType());
+    assertEquals(toyotaCorolla1.getColor(), toyotaCorolla2.getColor());
     logger.debug(toyotaCorolla1);
 
     logger.info("Check If any other Car with same properties return a different object.");
     Car toyotaHillux1 = new InternalCombustionCar.Builder("Toyota", "Hillux").color("grey").build();
     Car toyotaHillux2 = new InternalCombustionCar.Builder("Toyota", "Hillux").color("grey").build();
-    assertNotEquals(toyotaHillux1, toyotaHillux2);
+    assertNotSame(toyotaHillux1, toyotaHillux2);
     assertEquals(toyotaHillux1.getBrand(), toyotaHillux2.getBrand());
     assertEquals(toyotaHillux1.getType(), toyotaHillux2.getType());
     assertEquals(toyotaHillux1.getColor(), toyotaHillux2.getColor());
@@ -59,8 +59,8 @@ public class TestCarBuilder {
     final ElectricCar tesla = new ElectricCar.Builder("Tesla", "S").power(310).torque(600).gears(1).batteryCapacity(60).build();
     final ElectricCar regularTesla = tesla.toBuilder().color("Grey").build();
     final ElectricCar customTesla = tesla.toBuilder().color("White").batteryCapacity(85).build();
-    assertNotEquals(tesla, regularTesla);
-    assertNotEquals(tesla, customTesla);
+    assertNotSame(tesla, regularTesla);
+    assertNotSame(tesla, customTesla);
 
     assertEquals(tesla.getBrand(), regularTesla.getBrand());
     assertEquals(tesla.getBrand(), customTesla.getBrand());
